@@ -22,6 +22,7 @@ var storeText3;
 var storeText4;
 var g_42_month;
 var g_little_horn;
+var g_sacrifice;
 var counter = 0;
 var star;
 
@@ -34,10 +35,10 @@ function preload() {
     game.load.image('rev_9_1_12', 'revelation/rev9.1-12.jpg');
     game.load.image('rev_9_13_20', 'revelation/rev9.13-20.jpg');
 
-    game.load.image('rev_12_1_17', 'revelation/rev12.1-17.jpg');
-
     game.load.image('rev_11_1_10', 'revelation/rev11.1-10.jpg');
     game.load.image('rev_11_11_19', 'revelation/rev11.11-19.jpg');
+
+    game.load.image('rev_12_1_17', 'revelation/rev12.1-17.jpg');
 
     game.load.image('rev_13_1_10', 'revelation/rev13.1-10.jpg');
     game.load.image('rev_13_11_18', 'revelation/rev13.11-18.jpg');
@@ -51,10 +52,12 @@ function preload() {
     game.load.image('dan_8_1_12', 'daniel/dan8.1_12.jpg');
     game.load.image('dan_8_13_26', 'daniel/dan8.13_26.jpg');
     game.load.image('dan_9_20_27', 'daniel/dan9.20_27.jpg');
+    game.load.image('dan_11_23_35', 'daniel/dan11.23_35.jpg');
     game.load.image('dan_11_36_45', 'daniel/dan11.36_45.jpg');
     game.load.image('dan_12_1_13', 'daniel/dan12.1_13.jpg');
     game.load.image('button_42_month', 'daniel/button_42_month.png');
     game.load.image('button_little_horn', 'daniel/button_little_horn.png');
+    game.load.image('button_sacrifice', 'daniel/sacrifice.png');
 }
 
 function create() {
@@ -75,15 +78,21 @@ function create() {
     game.add.sprite(1000, 1080, 'dan_8_1_12');
     game.add.sprite(1000, 1760, 'dan_8_13_26');  
     game.add.sprite(1480, 1080, 'dan_9_20_27');
+    game.add.sprite(1480, 1600, 'dan_11_23_35');
     game.add.sprite(1980, 1080, 'dan_11_36_45');
     game.add.sprite(1980, 1630, 'dan_12_1_13');
     
     g_42_month = game.add.sprite(50,5, 'button_42_month');
-    g_little_horn = game.add.sprite(50,20, 'button_little_horn');
     g_42_month.inputEnabled = true;
-    g_little_horn.inputEnabled = true;
     g_42_month.events.onInputDown.add(button_42_monthClicked, this);
+
+    g_little_horn = game.add.sprite(50,20, 'button_little_horn');
+    g_little_horn.inputEnabled = true;
     g_little_horn.events.onInputDown.add(button_little_hornClicked, this);
+
+    g_sacrifice = game.add.sprite(190,5, 'button_sacrifice');
+    g_sacrifice.inputEnabled = true;
+    g_sacrifice.events.onInputDown.add(button_sacrificeClicked, this);
 
     star = game.add.sprite(0,0,'star');
     game.physics.startSystem(Phaser.Physics.P2JS);
@@ -102,6 +111,7 @@ function create() {
 
     draw42Month();
     drawLittleHorn();
+    drawSacrifice();
 
     // add PageUp PageDown Home End
     pageUpKey = game.input.keyboard.addKey(Phaser.Keyboard.PAGE_UP);
@@ -183,6 +193,10 @@ function button_little_hornClicked() {
     counter++;
     storeText3.text = "You clicked " + counter + " times!";   
     g_little_horn.visible =! g_little_horn.visible;
+}
+
+function button_sacrificeClicked() {
+    g_sacrifice.visible =! g_sacrifice.visible; 
 }
 
 function draw42Month() {
@@ -299,8 +313,8 @@ function drawLittleHorn() {
     g_little_horn.endFill();    
     // daniel 8:11
     g_little_horn.beginFill(0xFF700B, 1);    
-    g_little_horn.moveTo(970,1550);
-    g_little_horn.lineTo(1085,1550); 
+    g_little_horn.moveTo(970,1548);
+    g_little_horn.lineTo(1085,1548); 
     g_little_horn.endFill();    
     // daniel 8:12
     g_little_horn.beginFill(0xFF700B, 1);    
@@ -309,6 +323,37 @@ function drawLittleHorn() {
     g_little_horn.endFill();     
 }    
 
+function drawSacrifice() {
+    g_sacrifice = game.add.graphics(100, 100);
+
+    // set a fill and line style
+    g_sacrifice.lineStyle(2, 0x06E206, 0.8);
+    // daniel 8:11
+    g_sacrifice.beginFill(0xFF700B, 1);    
+    g_sacrifice.moveTo(960,1560);
+    g_sacrifice.lineTo(1055,1560); 
+    g_sacrifice.endFill();     
+    // daniel 8:13
+    g_sacrifice.beginFill(0xFF700B, 1);    
+    g_sacrifice.moveTo(910,1704);
+    g_sacrifice.lineTo(1000,1704); 
+    g_sacrifice.endFill();     
+    // daniel 9:27
+    g_sacrifice.beginFill(0xFF700B, 1);    
+    g_sacrifice.moveTo(1580,1402);
+    g_sacrifice.lineTo(1690,1402); 
+    g_sacrifice.endFill();      
+    // daniel 11:31
+    g_sacrifice.beginFill(0xFF700B, 1);    
+    g_sacrifice.moveTo(1705,2000);
+    g_sacrifice.lineTo(1800,2000);
+    g_sacrifice.endFill();     
+    // daniel 12:11
+    g_sacrifice.beginFill(0xFF700B, 1);    
+    g_sacrifice.moveTo(2090,2058);
+    g_sacrifice.lineTo(2180,2058);
+    g_sacrifice.endFill();     
+}
 </script>
 </body>
 </html>
