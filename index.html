@@ -30,7 +30,6 @@ var star;
 function preload() {
 
     // game.load.image('sky', 'assets/sky.png');
-    game.load.image('star', 'assets/star.png');
 
     game.load.image('rev_9_1_12', 'revelation/rev9.1-12.jpg');
     game.load.image('rev_9_13_20', 'revelation/rev9.13-20.jpg');
@@ -58,6 +57,7 @@ function preload() {
     game.load.image('button_42_month', 'daniel/button_42_month.png');
     game.load.image('button_little_horn', 'daniel/button_little_horn.png');
     game.load.image('button_sacrifice', 'daniel/sacrifice.png');
+    game.load.image('star', 'assets/star.png');    
 }
 
 function create() {
@@ -94,15 +94,6 @@ function create() {
     g_sacrifice.inputEnabled = true;
     g_sacrifice.events.onInputDown.add(button_sacrificeClicked, this);
 
-    star = game.add.sprite(0,0,'star');
-    game.physics.startSystem(Phaser.Physics.P2JS);
-
-    // game.physics.enable(star, Phaser.Physics.ARCADE);    
-    game.physics.p2.enable(star);
-    //  Our controls.
-    cursors = game.input.keyboard.createCursorKeys();
-    game.camera.follow(star);
-
     storeText1 = game.add.text(560, 0, 'score: 0', { fontSize: '12px Arial', fill: '#fff' });
     storeText2 = game.add.text(560, 30, 'score: 0', { fontSize: '12px Arial', fill: '#fff' });
 
@@ -118,6 +109,16 @@ function create() {
     pageDownKey = game.input.keyboard.addKey(Phaser.Keyboard.PAGE_DOWN);
     homeKey = game.input.keyboard.addKey(Phaser.Keyboard.HOME);
     endKey = game.input.keyboard.addKey(Phaser.Keyboard.END);    
+
+    // !!!!!!!!always loads last!!!!!!!!
+    star = game.add.sprite(0,0,'star');
+    game.physics.startSystem(Phaser.Physics.P2JS);
+
+    // game.physics.enable(star, Phaser.Physics.ARCADE);    
+    game.physics.p2.enable(star);
+    //  Our controls.
+    cursors = game.input.keyboard.createCursorKeys();
+    game.camera.follow(star);    
 }
 
 function update() {
