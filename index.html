@@ -1,0 +1,314 @@
+<!doctype html> 
+<html lang="en"> 
+<head> 
+    <meta charset="UTF-8" />
+    <title>Bible Prophecy</title>
+    <script type="text/javascript" src="js/phaser.min.js"></script>
+    <style type="text/css">
+        body {
+            margin: 0;
+        }
+    </style>
+</head>
+<body style="background-color: black">
+
+<script type="text/javascript">
+
+var game = new Phaser.Game(1280, 1280, Phaser.CANVAS, '', { preload: preload, create: create, update: update });
+var starVelocity1 = 900;
+var storeText1;
+var storeText2;
+var storeText3;
+var storeText4;
+var g_42_month;
+var g_little_horn;
+var counter = 0;
+var star;
+
+
+function preload() {
+
+    // game.load.image('sky', 'assets/sky.png');
+    game.load.image('star', 'assets/star.png');
+
+    game.load.image('rev_9_1_12', 'revelation/rev9.1-12.jpg');
+    game.load.image('rev_9_13_20', 'revelation/rev9.13-20.jpg');
+
+    game.load.image('rev_12_1_17', 'revelation/rev12.1-17.jpg');
+
+    game.load.image('rev_11_1_10', 'revelation/rev11.1-10.jpg');
+    game.load.image('rev_11_11_19', 'revelation/rev11.11-19.jpg');
+
+    game.load.image('rev_13_1_10', 'revelation/rev13.1-10.jpg');
+    game.load.image('rev_13_11_18', 'revelation/rev13.11-18.jpg');
+
+    game.load.image('rev_17_1_8', 'revelation/rev17.1-8.jpg');
+    game.load.image('rev_17_9_18', 'revelation/rev17.9-18.jpg');
+
+    game.load.image('dan_2_31_45', 'daniel/dan2.31_45.jpg');
+    game.load.image('dan_7_2_14', 'daniel/dan7.2_14.jpg');
+    game.load.image('dan_7_15_28', 'daniel/dan7.15_28.jpg');
+    game.load.image('dan_8_1_12', 'daniel/dan8.1_12.jpg');
+    game.load.image('dan_8_13_26', 'daniel/dan8.13_26.jpg');
+    game.load.image('dan_9_20_27', 'daniel/dan9.20_27.jpg');
+    game.load.image('dan_11_36_45', 'daniel/dan11.36_45.jpg');
+    game.load.image('dan_12_1_13', 'daniel/dan12.1_13.jpg');
+    game.load.image('button_42_month', 'daniel/button_42_month.png');
+    game.load.image('button_little_horn', 'daniel/button_little_horn.png');
+}
+
+function create() {
+    game.world.setBounds(0, 0, 2500, 2500);
+
+    game.add.sprite(50, 50, 'rev_9_1_12');
+    game.add.sprite(50, 620, 'rev_9_13_20');  
+    game.add.sprite(530, 50, 'rev_11_1_10');
+    game.add.sprite(530, 580, 'rev_11_11_19');
+    game.add.sprite(1000, 50, 'rev_12_1_17');    
+    game.add.sprite(1480, 50, 'rev_13_1_10');
+    game.add.sprite(1480, 520, 'rev_13_11_18');      
+    game.add.sprite(1980, 50, 'rev_17_1_8');
+    game.add.sprite(1980, 520, 'rev_17_9_18');   
+    game.add.sprite(50, 1080, 'dan_2_31_45'); 
+    game.add.sprite(530, 1080, 'dan_7_2_14');
+    game.add.sprite(530, 1820, 'dan_7_15_28');
+    game.add.sprite(1000, 1080, 'dan_8_1_12');
+    game.add.sprite(1000, 1760, 'dan_8_13_26');  
+    game.add.sprite(1480, 1080, 'dan_9_20_27');
+    game.add.sprite(1980, 1080, 'dan_11_36_45');
+    game.add.sprite(1980, 1630, 'dan_12_1_13');
+    
+    g_42_month = game.add.sprite(50,5, 'button_42_month');
+    g_little_horn = game.add.sprite(50,20, 'button_little_horn');
+    g_42_month.inputEnabled = true;
+    g_little_horn.inputEnabled = true;
+    g_42_month.events.onInputDown.add(button_42_monthClicked, this);
+    g_little_horn.events.onInputDown.add(button_little_hornClicked, this);
+
+    star = game.add.sprite(0,0,'star');
+    game.physics.startSystem(Phaser.Physics.P2JS);
+
+    // game.physics.enable(star, Phaser.Physics.ARCADE);    
+    game.physics.p2.enable(star);
+    //  Our controls.
+    cursors = game.input.keyboard.createCursorKeys();
+    game.camera.follow(star);
+
+    storeText1 = game.add.text(560, 0, 'score: 0', { fontSize: '12px Arial', fill: '#fff' });
+    storeText2 = game.add.text(560, 30, 'score: 0', { fontSize: '12px Arial', fill: '#fff' });
+
+    storeText3 = game.add.text(860, 0, 'score: 0', { fontSize: '12px Arial', fill: '#fff' });
+    storeText4 = game.add.text(860, 30, 'score: 0', { fontSize: '12px Arial', fill: '#fff' });
+
+    draw42Month();
+    drawLittleHorn();
+
+    // add PageUp PageDown Home End
+    pageUpKey = game.input.keyboard.addKey(Phaser.Keyboard.PAGE_UP);
+    pageDownKey = game.input.keyboard.addKey(Phaser.Keyboard.PAGE_DOWN);
+    homeKey = game.input.keyboard.addKey(Phaser.Keyboard.HOME);
+    endKey = game.input.keyboard.addKey(Phaser.Keyboard.END);    
+}
+
+function update() {
+
+    star.body.setZeroVelocity();
+    star.body.angularVelocity = 1;
+                           
+    if (cursors.up.isDown) { star.body.moveUp(starVelocity1) }
+    else if (cursors.down.isDown) { star.body.moveDown(starVelocity1); }
+
+    if (cursors.left.isDown) { star.body.moveLeft(starVelocity1); }
+    else if (cursors.right.isDown) { star.body.moveRight(starVelocity1); }
+
+    // if (pageUpKey.isDown) { star.body.moveUp(starVelocity2) }
+    // else if (pageDownKey.isDown) { star.body.moveDown(starVelocity2); }
+
+    // if (homeKey.isDown) { star.body.moveLeft(starVelocity2); }
+    // else if (endKey.isDown) { star.body.moveRight(starVelocity2); }
+
+    //move when you click
+    if (game.input.mousePointer.isDown)
+    {
+        if (game.origDragPoint) {      
+            //move the camera by the amount the mouse has moved since last update      
+            game.camera.x += game.origDragPoint.x - game.input.activePointer.position.x;     
+            game.camera.y += game.origDragPoint.y - game.input.activePointer.position.y; 
+            // set new drag origin to current position  
+            game.origDragPoint = game.input.activePointer.position.clone();
+        } else {    
+            game.origDragPoint = null;
+        }
+
+        //star.position.x = game.input.x;
+        //star.position.y = game.input.y;
+        //game.camera.focusOnXY(game.input.mousePointer.x, game.input.mousePointer.y);
+    }
+
+    storeText1.text = window.screen.availHeight;
+    storeText2.text = window.screen.availWidth;
+
+    //storeText3.text = '';//game.physics.arcade.angleToPointer(star);//game.input.x;//game.origDragPoint.x;//game.input.activePointer.position.x;// game.input.mousePointer.x;
+    storeText4.text = game.input.y;//game.origDragPoint.x;//game.input.activePointer.position.y;// game.input.mousePointer.y;   
+
+
+
+    // if (game.input.activePointer.isDown) {                    
+    //     if (game.origDragPoint) {                        
+    //         // move the camera by the amount the mouse has moved since last update                        
+    //         Level1.x -= game.origDragPoint.x - .game.input.activePointer.position.x;                        
+    //         Level2.x -= game.origDragPoint.x - game.input.activePointer.position.x;                    
+    //     }                    
+    //     // set new drag origin to current position                    
+    //     game.origDragPoint = game.input.activePointer.position.clone();                
+    //     } else {                    
+    //         game.origDragPoint = null;                
+    //     }
+    // }
+}
+
+function render() {
+
+    // game.debug.cameraInfo(game.camera, 0, 0);
+    // game.debug.spriteCoords(star, 0, 500);
+}
+
+function button_42_monthClicked() {
+    counter++;
+    storeText3.text = "You clicked " + counter + " times!";
+    g_42_month.visible =! g_42_month.visible;     
+}
+
+function button_little_hornClicked() {
+    counter++;
+    storeText3.text = "You clicked " + counter + " times!";   
+    g_little_horn.visible =! g_little_horn.visible;
+}
+
+function draw42Month() {
+    g_42_month = game.add.graphics(100, 100);
+
+    // set a fill and line style
+    g_42_month.lineStyle(2, 0xFF0000, 0.8);
+    // rev 11:2
+    g_42_month.beginFill(0xFF700B, 1);    
+    g_42_month.moveTo(570,48);
+    g_42_month.lineTo(690,48);   
+    g_42_month.endFill();
+    // rev 11:3
+    g_42_month.beginFill(0xFF700B, 1);    
+    g_42_month.moveTo(490,90);
+    g_42_month.lineTo(750,90);   
+    g_42_month.endFill();
+    // rev 12:6
+    g_42_month.beginFill(0xFF700B, 1);
+    g_42_month.moveTo(910,230);
+    g_42_month.lineTo(1070,230);   
+    g_42_month.endFill();
+
+    g_42_month.beginFill(0xFF700B, 1);
+    g_42_month.moveTo(1208,215);
+    g_42_month.lineTo(1290,215);   
+    g_42_month.endFill();
+    // rev 12:14
+    g_42_month.beginFill(0xFF700B, 1);
+    g_42_month.moveTo(933,593);
+    g_42_month.lineTo(1138,593);   
+    g_42_month.endFill();    
+    // rev 13:4
+    g_42_month.beginFill(0xFF700B, 1);
+    g_42_month.moveTo(1490,164);
+    g_42_month.lineTo(1610,164);   
+    g_42_month.endFill();    
+    // daniel 7:25
+    g_42_month.beginFill(0xFF700B, 1);
+    g_42_month.moveTo(740,2206);
+    g_42_month.lineTo(860,2206);   
+    g_42_month.endFill();
+
+    g_42_month.beginFill(0xFF700B, 1);
+    g_42_month.moveTo(440,2220);
+    g_42_month.lineTo(560,2220);   
+    g_42_month.endFill();
+   // daniel 12:7
+    g_42_month.beginFill(0xFF700B, 1);
+    g_42_month.moveTo(1893,1890);
+    g_42_month.lineTo(2050,1890);   
+    g_42_month.endFill();
+    //daniel 12:11
+    g_42_month.beginFill(0xFF700B, 1);
+    g_42_month.moveTo(1893,2085);
+    g_42_month.lineTo(2120,2085);   
+    g_42_month.endFill();
+    //daniel 12:12
+    g_42_month.beginFill(0xFF700B, 1);
+    g_42_month.moveTo(2205,2110);
+    g_42_month.lineTo(2290,2110);   
+    g_42_month.endFill();
+
+    g_42_month.beginFill(0xFF700B, 1);
+    g_42_month.moveTo(1893,2125);
+    g_42_month.lineTo(2090,2125);   
+    g_42_month.endFill();    
+}
+
+function drawLittleHorn() {
+    g_little_horn = game.add.graphics(100, 100);
+
+    // set a fill and line style
+    g_little_horn.lineStyle(2, 0xFFFF00, 0.8);
+    // daniel 7:8
+    g_little_horn.beginFill(0xFF700B, 1);  
+    g_little_horn.moveTo(490,1348);
+    g_little_horn.lineTo(555,1348);   
+    g_little_horn.endFill();
+    // daniel 7:8
+    g_little_horn.beginFill(0xFF700B, 1);    
+    g_little_horn.moveTo(670,1362);
+    g_little_horn.lineTo(800,1362); 
+    g_little_horn.endFill();
+    // daniel 7:11
+    g_little_horn.beginFill(0xFF700B, 1);    
+    g_little_horn.moveTo(700,1518);
+    g_little_horn.lineTo(850,1518); 
+    g_little_horn.endFill();    
+    // daniel 7:11
+    g_little_horn.beginFill(0xFF700B, 1);    
+    g_little_horn.moveTo(443,1532);
+    g_little_horn.lineTo(503,1532); 
+    g_little_horn.endFill();
+    // daniel 7:20
+    g_little_horn.beginFill(0xFF700B,1);    
+    g_little_horn.moveTo(560,1960);
+    g_little_horn.lineTo(700,1960); 
+    g_little_horn.endFill();  
+    // daniel 7:24
+    g_little_horn.beginFill(0xFF700B,1);    
+    g_little_horn.moveTo(500,2142);
+    g_little_horn.lineTo(690,2142); 
+    g_little_horn.endFill();  
+    // daniel 8:9
+    g_little_horn.beginFill(0xFF700B, 1);    
+    g_little_horn.moveTo(1142,1443);
+    g_little_horn.lineTo(1215,1443); 
+    g_little_horn.endFill();
+    // daniel 8:10
+    g_little_horn.beginFill(0xFF700B, 1);    
+    g_little_horn.moveTo(942,1495);
+    g_little_horn.lineTo(1050,1495); 
+    g_little_horn.endFill();    
+    // daniel 8:11
+    g_little_horn.beginFill(0xFF700B, 1);    
+    g_little_horn.moveTo(970,1550);
+    g_little_horn.lineTo(1085,1550); 
+    g_little_horn.endFill();    
+    // daniel 8:12
+    g_little_horn.beginFill(0xFF700B, 1);    
+    g_little_horn.moveTo(970,1600);
+    g_little_horn.lineTo(1085,1600); 
+    g_little_horn.endFill();     
+}    
+
+</script>
+</body>
+</html>
