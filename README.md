@@ -1,6 +1,6 @@
 # presentation
 phaser js daniel and revelation presentation
-help to understand profetic symbolism between the two books
+help to understand prophetic symbolism between the two books
 
 git clone https://github.com/mmaurier/presentation.git
 
